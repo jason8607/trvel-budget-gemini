@@ -1,0 +1,5 @@
+{
+  "name": "TravelSpend AI",
+  "description": "A smart travel expense tracker with multi-currency support, data visualization, and AI-powered spending analysis.",
+  "requestFramePermissions": []
+}
