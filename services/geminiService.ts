@@ -1,15 +1,9 @@
 import { GoogleGenAI, Type } from "@google/genai";
 import { Expense, AnalysisResult } from '../types';
 
-const apiKey = process.env.API_KEY || '';
-
-const ai = new GoogleGenAI({ apiKey });
+const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
 
 export const analyzeExpenses = async (expenses: Expense[], currencyCode: string): Promise<AnalysisResult> => {
-  if (!apiKey) {
-    throw new Error("API Key not found");
-  }
-
   if (expenses.length === 0) {
     return {
       summary: "尚未有消費紀錄。請新增您的第一筆旅遊支出！",
