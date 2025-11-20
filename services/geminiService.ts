@@ -1,8 +1,6 @@
 import { GoogleGenAI, Type } from "@google/genai";
 import { Expense, AnalysisResult } from '../types';
 
-const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
-
 export const analyzeExpenses = async (expenses: Expense[], currencyCode: string): Promise<AnalysisResult> => {
   if (expenses.length === 0) {
     return {
@@ -33,6 +31,9 @@ export const analyzeExpenses = async (expenses: Expense[], currencyCode: string)
   `;
 
   try {
+    // Initialize client here to avoid top-level crash if API key is missing
+    const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+
     const response = await ai.models.generateContent({
       model: 'gemini-2.5-flash',
       contents: prompt,
@@ -62,7 +63,7 @@ export const analyzeExpenses = async (expenses: Expense[], currencyCode: string)
     console.error("Gemini Analysis Error:", error);
     return {
         summary: "暫時無法分析數據。",
-        advice: ["請確認網路連線。", "稍後再試。"],
+        advice: ["請確認 API Key 設定。", "稍後再試。"],
         budgetStatus: "warning"
     };
   }
